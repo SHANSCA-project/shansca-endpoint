@@ -2,7 +2,7 @@
 
 configure_firewall() {
   sudo apt-get install ufw
-  sudo ufw enable
+  sudo ufw --force enable
   sudo ufw allow 22/tcp
   sudo ufw allow 3000/tcp
 }
@@ -17,27 +17,27 @@ install_shansca() {
 }
 
 create_service() {
-sudo tee /etc/systemd/system/shansca.service > /dev/null << EOL
-[Unit]
-Description=SHANSCA Endpoint
-After=network.target
+  sudo tee /etc/systemd/system/shansca.service > /dev/null << EOL
+  [Unit]
+  Description=SHANSCA Endpoint
+  After=network.target
 
-[Service]
-ExecStart=/usr/bin/shansca
-Restart=always
-User=$USER
-Environment=NODE_ENV=production
+  [Service]
+  ExecStart=/usr/bin/shansca
+  Restart=always
+  User=$USER
+  Environment=NODE_ENV=production
 
-[Install]
-WantedBy=multi.user.target
+  [Install]
+  WantedBy=multi.user.target
 EOL
 
-sudo systemctl daemon-reload
+  sudo systemctl daemon-reload
 
-sudo systemctl enable shansca
-sudo systemctl start shansca
+  sudo systemctl enable shansca
+  sudo systemctl start shansca
 
-echo "Shansca is now running, and will automatically restart with the server."
+  echo "SHANSCA is now running, and will automatically restart with the server."
 }
 
 configure_firewall
