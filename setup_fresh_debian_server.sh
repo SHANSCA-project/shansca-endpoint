@@ -1,15 +1,19 @@
 #!/bin/bash
 
+install_package() {
+  sudo apt-get install "$1" -y
+}
+
 configure_firewall() {
-  sudo apt-get install ufw
+  install_package ufw
   sudo ufw --force enable
   sudo ufw allow 22/tcp
   sudo ufw allow 3000/tcp
 }
 
 install_node() {
-  sudo apt-get install nodejs
-  sudo apt-get install npm
+  install_package nodejs
+  install_package npm
 }
 
 install_shansca() {
